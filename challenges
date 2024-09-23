@@ -1,0 +1,31 @@
+select username,created_at
+from users
+order by created_at asc limit 5;
+
+-- what are the top 5 commonly used hash tags
+select tags.id as tag_id,
+tags.tag_name,
+count(*) as total_tags_count
+from tags 
+join photo_tags
+on tags.id = photo_tags.tag_id
+group by tags.id
+order by total_tags_count desc
+limit 5;
+
+-- on which a how many members are created
+
+select dayname(created_at) as Day_of_the_week,count(*) as total_count
+from users
+group by dayname(created_at)
+order by total_count desc;
+
+-- 3.FIND THE USERS WHO HAVEN'T POSTED YET.
+SELECT
+USERS.ID,
+USERNAME,
+USERS.CREATED_AT AS USER_JOINING_DATE
+FROM USERS
+LEFT JOIN PHOTOS
+ON USERS.ID=PHOTOS.USER_ID
+WHERE PHOTOS.USER_ID IS NULL;
